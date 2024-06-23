@@ -19,7 +19,7 @@ URL-
 * AWS Lambda, API Gateway, DynamodDB
 
 ## Authors
-* Yael Sherman
-* Dassi RabenStein
-* Tehila Hakkakian
-* Priva Milikowsky 
+* Yael Sherman - YS
+* Dassi Rabenstein - DR
+* Tehila Hakkakian - TH
+* Priva Milikowsky -PM
