@@ -7,6 +7,7 @@ import Delete from './Pages/Delete';
 import Retrieve from './Pages/Retrieve';
 import Update from './Pages/Update';
 import Layout from './Layout/Layout';
+import Contact from './Pages/Contact';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="Add" element={<Add />} />
         <Route path="Update" element={<Update />} />
         <Route path="About" element={<About />} />
+        <Route path="Contact" element={<Contact />} />
       </Route>
     </Routes>
   </BrowserRouter>
