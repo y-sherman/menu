@@ -7,7 +7,7 @@ Do all CRUD requests
 Ex. create menus, read menus, update menus, and delete menus
 
 ## How to Access Code
-Github-
+Github- "https://github.com/meiragoldstone/menu.git"
 
 AWS-
 
