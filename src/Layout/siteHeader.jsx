@@ -7,23 +7,32 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export default function SiteHeader() {
   return (
    <>
-        <Navbar bg="dark" variant='dark' expand="lg" >
-            <Container>
-                    <Navbar.Brand href="/">Menu Home Page</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/About">About</Nav.Link>
-                            <Nav.Link href="/Contact">Contact</Nav.Link>
-                            <Nav.Link href="/Add">Add</Nav.Link>
-                            <Nav.Link href="/Delete">Delete</Nav.Link>
-                            <Nav.Link href="/Retrieve">Retrieve</Nav.Link>
-                            <Nav.Link href="/Update">Update</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-            </Container>
-        </Navbar>
+        <Nav 
+        fixedTop
+        style={{backgroundColor: "Black", fontSize: 25, fontFamily: "monospace", }}
+        justify variant="tabs" defaultActiveKey="/home">
+            <Nav.Item className="text-white-50 bg-dark">
+                <Nav.Link href="/" style={{color:"white"}}>Home</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="About" style={{color:"white"}}>About</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="Contact" style={{color:"white"}}>Contact</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="Add" style={{color:"white"}}>Add</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="Delete" style={{color:"white"}}>Delete</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="Retrieve" style={{color:"white"}}>Retrieve</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link href="Update"style={{color:"white"}} >Update</Nav.Link>
+            </Nav.Item>
+        </Nav>
     </>
   );
 }
