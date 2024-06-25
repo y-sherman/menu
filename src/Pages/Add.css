@@ -5,6 +5,14 @@ label {
     padding-top: 10px;
 }
 
+button {
+    background-color: pink;
+}
 #button:hover {
     background-color: lightslategray;
+}
+
+.listGroup.item {
+    padding: 10px;
+    background-color:aliceblue;
 }
