@@ -3,9 +3,9 @@ import Image from "react-bootstrap/Image"
 import 'bootstrap/dist/css/bootstrap.min.css'
 export default function About(){
  
-    const picture1 = require('../images/Orange(1).jpg');
-    const picture2 = require('../images/Watermelon(1).jpg');
-    const picture3 = require('../images/Avocado(1).jpg');
+    const picture1 = require('../images/Orange.jpg');
+    const picture2 = require('../images/Watermelon.jpg');
+    const picture3 = require('../images/Avocado.jpg');
 
     return (
         <>
