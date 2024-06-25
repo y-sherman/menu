@@ -7,20 +7,20 @@ export default function Home(){
                 <div className = "text-center">
                     <h1 className = "display-4">Welcome to Team Menu App</h1>
                     <p className = "lead">
-                        Create and store your menus with ease. For any occasion, we have you covered
+                        Create and store your menus with ease. For any occasion, we have you covered.
                     </p>
 
                     <div className = "btn-row">
-                        <Button variant ="outline-pink" className = "custom-btn" href = "/Add">
-                            Add Menu
+                        <Button variant ="custom" className = "custom-btn" href = "/Add">
+                            Add a Menu
                         </Button>
-                        <Button variant ="outline-pink" className = "custom-btn" href = "/Update">
-                            Edit Menu
+                        <Button variant ="custom" className = "custom-btn" href = "/Update">
+                            Edit a Menu
                         </Button>
-                        <Button variant ="outline-pink" className = "custom-btn" href = "/Delete">
+                        <Button variant ="custom" className = "custom-btn" href = "/Delete">
                             Delete a Menu
                         </Button>
-                        <Button variant ="outline-pink" className = "custom-btn" href = "/Retrieve">
+                        <Button variant ="custom" className = "custom-btn" href = "/Retrieve">
                             View a Menu
                         </Button>
                     </div>
