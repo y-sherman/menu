@@ -1,0 +1,22 @@
+.home-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.feature-section {
+    margin-top: 50px;
+}
+
+.feature-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.feature-section p {
+    font-size: 1.2rem;
+}
+
+.button {
+    background-color:bisque;
+    padding: 15px;
+}
