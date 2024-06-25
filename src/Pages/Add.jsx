@@ -59,7 +59,7 @@ const MenuList = () => {
 
             <ListGroup className = "mt-4">
                 {menus.map((menu, index) => (
-                    <ListGroup.Item key = {index}>
+                    <ListGroup.Item key = {index} className = "custom-list-item">
                         <h5>{menu.name}</h5>
                         <ul>
                             {menu.description.map((item, idx) => (
