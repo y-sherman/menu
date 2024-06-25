@@ -1,4 +1,4 @@
-import {Container, Jumbotron, Button } from 'react-bootstrap';
+import {Container, Button } from 'react-bootstrap';
 import './Home.css';
 
 export default function Home(){
@@ -10,14 +10,21 @@ export default function Home(){
                         Create and store your menus with ease. For any occasion, we have you covered
                     </p>
 
-                    <div class = "btn-row">
-                        <Button type = "button" class = "btn btn-outline px2" href = "/Add">
+                    <div className = "btn-row">
+                        <Button variant ="outline-pink" className = "custom-btn" href = "/Add">
                             Add Menu
                         </Button>
-                        <Button type = "button" class = "btn btn-outline px2" href = "/Retrieve">
+                        <Button variant ="outline-pink" className = "custom-btn" href = "/Update">
                             Edit Menu
                         </Button>
+                        <Button variant ="outline-pink" className = "custom-btn" href = "/Delete">
+                            Delete a Menu
+                        </Button>
+                        <Button variant ="outline-pink" className = "custom-btn" href = "/Retrieve">
+                            View a Menu
+                        </Button>
                     </div>
+
                 </div>
                
                 <hr className = "my-4"/>
