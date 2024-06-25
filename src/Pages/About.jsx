@@ -30,7 +30,7 @@ export default function About(){
                     <Image className="d-block w-100 carousel-image" src= {picture3} alt="Image Three" fluid />
                     <Carousel.Caption>
                         <h3>Get Started</h3>
-                        <p> Create, delete, or edit your own menu today
+                        <p> Create, delete, or edit your own menu today right here
                         </p>
                     </Carousel.Caption>
                 </Carousel.Item>
