@@ -24,6 +24,14 @@ export default function Delete() {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); // 'Menu deleted successfully'
+                // Update state to remove the deleted menu
+                setMenuList(prevMenuList => prevMenuList.filter(m => m !== menu));
+
+                const menuElement = document.getElementById(`${menu}`);
+                if (menuElement) {
+                    menuElement.remove();
+                }
+
             } else {
                 console.error(`Failed to delete menu: ${response.statusText}`);
             }
