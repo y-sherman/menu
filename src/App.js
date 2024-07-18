@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import About from './Pages/About';
 import Add from './Pages/Add';
@@ -8,7 +7,6 @@ import Retrieve from './Pages/Retrieve';
 import Update from './Pages/Update';
 import Layout from './Layout/Layout';
 import Contact from './Pages/Contact';
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

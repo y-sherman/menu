@@ -1,6 +1,4 @@
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 //import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -8,7 +6,6 @@ export default function SiteHeader() {
   return (
    <>
         <Nav 
-        fixedTop
         style={{backgroundColor: "Black", fontSize: 25, fontFamily: "monospace", }}
         justify variant="tabs" defaultActiveKey="/home">
             <Nav.Item className="text-white-50 bg-dark">

@@ -1,20 +1,56 @@
 // Dassi Rabenstein
 // See a list of menus -> delete a menu from the list
 
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Container, Button, Card, Row, Col} from 'react-bootstrap';
 
 
 export default function Delete() {
 
     // functions
-    const [menuList, setMenuList] = useState(['Shabbos','Pesach','Rosh Chodesh','Chanukah']);
+    const [menuList, setMenuList] = useState([]);
 
-    const deleteMenu = value => {
-        setMenuList(oldMenuList => {
-            return oldMenuList.filter(menu => menu !== value);
-        });
-    };
+
+    async function deleteMenu(menu) {
+        try {
+            const params = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            const response = await fetch(`https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/CORE-enabled/deleteMenu?menuId=${menu}`,params)
+                
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // 'Menu deleted successfully'
+            } else {
+                console.error(`Failed to delete menu: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error('Error deleting menu from DynamoDB', error);
+        }
+    }
+    
+
+    useEffect(() => {
+        fetch('https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/default/getAllMenus')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok')
+                }
+                return response.json();
+            })
+            .then((data) => {
+                //list all menu names (pks)
+                const pks = data.map(d => d.pk);
+                setMenuList(pks);
+                console.log('Just Pks', pks);
+            })
+            .catch((error) => {
+                console.log('There was a problem with the fetch operations: ',error)
+            });
+    }, []);
 
     return (
         <>
