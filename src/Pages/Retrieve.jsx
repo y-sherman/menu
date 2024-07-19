@@ -1,55 +1,71 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 
-export default function Update() {
-    const menu = [
-        { 'Shabbos': ['Challah', 'Soup', 'Chicken'] },
-        { 'SundayDinner': ['Chicken Cutlets', 'Broccoli', 'Rice'] },
-        { 'FamilyBBQ': ['Hot dogs', 'Grilled Chicken', 'Corn', 'French Fries'] }
-    ];
+export default function Retrieve() {
+    const [menus, setMenus] = useState([]);
+    const [selectedMenu, setSelectedMenu] = useState(null);
 
-    const [selectedMenu, setSelectedMenu] = useState([]);
+    useEffect(() => {
+        fetch('https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/default/getAllMenus')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setMenus(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
-    const handleMenuChange = (e) => {
-        const selectedValue = e.currentTarget.value;
-        if (selectedValue === "") {
-            setSelectedMenu([]); // Clear selectedMenu if default option is selected
-        } else {
-            const selectedArray = Object.values(JSON.parse(selectedValue))[0];
-            setSelectedMenu(selectedArray);
-        }
+    const handleMenuChange = event => {
+        const selectedMenuPk = event.target.value;
+        const selectedMenuObject = menus.find(menu => menu.pk === selectedMenuPk);
+        setSelectedMenu(selectedMenuObject);
     };
 
     return (
         <div className="container mt-4">
-            <h1>Access your Menus here:</h1>
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <h1 className="text-center mb-4">View Your Menu</h1>
+                    <Form>
+                        <Form.Select
+                            value={selectedMenu ? selectedMenu.pk : ''}
+                            onChange={handleMenuChange}
+                        >
+                            <option value="">Select a Menu</option>
+                            {menus.map((menu, index) => (
+                                <option key={index} value={menu.pk}>
+                                    {menu.pk}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Form>
+                </div>
+            </div>
 
-            <Form className="mb-3">
-                <Form.Group controlId="selectMenu">
-                    <Form.Label>Select a Menu</Form.Label>
-                    <Form.Select
-                        value={selectedMenu.length > 0 ? JSON.stringify(menu.find(item => Object.keys(item)[0] === selectedMenu[0])) : ""}
-                        onChange={handleMenuChange}
-                    >
-                        <option value="">Select Menu</option> {/* Default option */}
-                        <option value={JSON.stringify(menu[0])}>Shabbos</option>
-                        <option value={JSON.stringify(menu[1])}>Sunday Dinner</option>
-                        <option value={JSON.stringify(menu[2])}>Family BBQ</option>
-                    </Form.Select>
-                </Form.Group>
-            </Form>
-
-            <div>
-                {selectedMenu.length > 0 ? (
-                    <ul className="list-group">
-                        {selectedMenu.map((item, index) => (
-                            <li key={index} className="list-group-item">{item}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="text-muted">Please select a menu above.</p>
-                )}
+            <div className="row justify-content-center mt-4">
+                <div className="col-lg-8">
+                    {!selectedMenu ? null : (
+                        <ul className="list-group">
+                            {Object.keys(selectedMenu).map((key, index) => {
+                                if (key !== 'pk') {
+                                    return (
+                                        <li key={index} className="list-group-item">
+                                            {selectedMenu[key]}
+                                        </li>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </ul>
+                    )}
+                </div>
             </div>
         </div>
     );
