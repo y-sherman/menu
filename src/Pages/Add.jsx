@@ -6,6 +6,7 @@ const MenuList = () => {
     const [menus, setMenus] = useState([]);
     const [menuName, setMenuName] = useState('');
     const [menuDescription, setMenuDescription] = useState([]);
+    const [userName, setUserName] = useState(''); // State for user's name
     const [error, setError] = useState(null);
 
     const handleNameChange = (e) => {
@@ -13,21 +14,30 @@ const MenuList = () => {
     };
 
     const handleDescriptionChange = (e) => {
-        const lines = e.target.value.split('\n').map(item => item.trim());  //separate description based on new lines
+        const lines = e.target.value.split('\n').map(item => item.trim());  // Separate description based on new lines
         setMenuDescription(lines);
     };
 
+    const handleUserNameChange = (e) => {
+        setUserName(e.target.value);  // Update user's name state
+    };
+
     const addMenu = async () => {
-        if (menuName.trim() !== '' && menuDescription.length > 0) {
+        if (menuName.trim() !== '' && menuDescription.length > 0 && userName.trim() !== '') {
             const newMenu = {
                 menuId: menuName,
+                userName: userName,
                 menuItems: menuDescription
+                  // Include user's name in the newMenu object
             };
             
             try {
                 const response = await fetch('https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/CORE-enabled/createMenu', {
                     method: 'POST',
-                    body: JSON.stringify(newMenu)
+                    body: JSON.stringify(newMenu),
+                    // headers: {
+                    //     'Content-Type': 'application/json'
+                    // }
                 });
 
                 if (!response.ok) {
@@ -40,6 +50,7 @@ const MenuList = () => {
                 setMenus([...menus, newMenu]);
                 setMenuName(''); 
                 setMenuDescription([]);
+                setUserName('');  // Clear user's name input after successfully adding menu
             } catch (error) {
                 console.error('Error creating menu:', error);
                 setError('Error creating menu');
@@ -52,7 +63,15 @@ const MenuList = () => {
             <h1 className="mt-4">Add a New Menu</h1>
 
             {error && <div className="alert alert-danger">{error}</div>}
-
+            <Form.Group>
+                    <Form.Label>Your Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter Your Name"
+                        value={userName}
+                        onChange={handleUserNameChange}
+                    />
+            </Form.Group>
             <Form className="mt-4">
                 <Form.Group>
                     <Form.Label>Menu Name</Form.Label>
@@ -73,6 +92,7 @@ const MenuList = () => {
                         onChange={handleDescriptionChange}
                     />
                 </Form.Group>
+
                 <Button variant="custom" className="btn btn-dark mt-4" onClick={addMenu}>Add Menu</Button>
             </Form>
 
@@ -80,6 +100,7 @@ const MenuList = () => {
                 {menus.map((menu, index) => (
                     <ListGroup.Item key={index} className="custom-list-item">
                         <h5>{menu.menuId}</h5>
+                        <p>Added by: {menu.userName}</p>
                         <ul>
                             {menu.menuItems.map((item, idx) => (
                                 <li key={idx}>{item}</li>
