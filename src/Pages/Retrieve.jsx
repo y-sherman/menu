@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap';
 export default function Retrieve() {
     const [menus, setMenus] = useState([]); // State for storing all menus
     const [selectedMenu, setSelectedMenu] = useState(null); // State for storing the selected menu
-    const [menuItems, setMenuItems] = useState([]); // State for storing menu items of the selected menu
+    const [menuItems1, setMenuItems1] = useState([]); // State for storing menu items of the selected menu
 
     useEffect(() => {
         const fetchMenus = async () => {
@@ -36,7 +36,10 @@ export default function Retrieve() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setMenuItems(data); // Setting state with specific fetched menu
+            console.log(data)
+            console.log(data.menuItems)
+            setMenuItems1(data.menuItems); // Setting state with specific fetched menu
+            
         } catch (error) {
             console.error('Error fetching menu items:', error);
         }
@@ -66,14 +69,14 @@ export default function Retrieve() {
             {/* Displaying selected menu details */}
             <div className="row justify-content-center mt-4">
                 <div className="col-lg-8">
-                    {!menuItems ? null : (
+                    {!menuItems1 ? null : (
                         <ul className="list-group">
                             {/* Rendering details of the selected menu */}
-                            {Object.keys(menuItems).map((key, index) => {
+                            {Object.keys(menuItems1).map((key, index) => {
                                 if (key !== 'pk') { // Excluding 'pk' from rendering
                                     return (
                                         <li key={index} className="list-group-item">
-                                            {menuItems[key]}
+                                            {menuItems1[key]}
                                         </li>
                                     );
                                 }
