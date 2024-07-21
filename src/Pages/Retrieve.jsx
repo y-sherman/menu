@@ -1,56 +1,89 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 
-export default function Update() {
-    const menu = [
-        { 'Shabbos': ['Challah', 'Soup', 'Chicken'] },
-        { 'SundayDinner': ['Chicken Cutlets', 'Broccoli', 'Rice'] },
-        { 'FamilyBBQ': ['Hot dogs', 'Grilled Chicken', 'Corn', 'French Fries'] }
-    ];
+export default function Retrieve() {
+    const [menus, setMenus] = useState([]); // State for storing all menus
+    const [selectedMenu, setSelectedMenu] = useState(null); // State for storing the selected menu
+    const [menuItems, setMenuItems] = useState([]); // State for storing menu items of the selected menu
 
-    const [selectedMenu, setSelectedMenu] = useState([]);
+    useEffect(() => {
+        const fetchMenus = async () => {
+            try {
+                const response = await fetch('https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/default/getAllMenus');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setMenus(data); // Setting state with fetched menus array
+            } catch (error) {
+                console.error('Error fetching menus:', error);
+            }
+        };
 
-    const handleMenuChange = (e) => {
-        const selectedValue = e.currentTarget.value;
-        if (selectedValue === "") {
-            setSelectedMenu([]); // Clear selectedMenu if default option is selected
-        } else {
-            const selectedArray = Object.values(JSON.parse(selectedValue))[0];
-            setSelectedMenu(selectedArray);
+        fetchMenus();
+    }, []);
+
+    // Function to handle menu selection change
+    const handleMenuChange = async (event) => {
+        const selectedMenuPk = event.target.value;
+        const selectedMenuObject = menus.find(menu => menu.pk === selectedMenuPk); // Finding the selected menu object
+        setSelectedMenu(selectedMenuObject); // Setting selected menu state
+
+        try {
+            const response = await fetch(`https://rs8vy4dblh.execute-api.us-east-1.amazonaws.com/CORE-enabled/retrieveMenu?menuId=${selectedMenuPk}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setMenuItems(data); // Setting state with specific fetched menu
+        } catch (error) {
+            console.error('Error fetching menu items:', error);
         }
     };
 
     return (
         <div className="container mt-4">
-            <h1>Access your Menus here:</h1>
-
-            <Form className="mb-3">
-                <Form.Group controlId="selectMenu">
-                    <Form.Label>Select a Menu</Form.Label>
-                    <Form.Select
-                        value={selectedMenu.length > 0 ? JSON.stringify(menu.find(item => Object.keys(item)[0] === selectedMenu[0])) : ""}
-                        onChange={handleMenuChange}
-                    >
-                        <option value="">Select Menu</option> {/* Default option */}
-                        <option value={JSON.stringify(menu[0])}>Shabbos</option>
-                        <option value={JSON.stringify(menu[1])}>Sunday Dinner</option>
-                        <option value={JSON.stringify(menu[2])}>Family BBQ</option>
-                    </Form.Select>
-                </Form.Group>
-            </Form>
-
-            <div>
-                {selectedMenu.length > 0 ? (
-                    <ul className="list-group">
-                        {selectedMenu.map((item, index) => (
-                            <li key={index} className="list-group-item">{item}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="text-muted">Please select a menu above.</p>
-                )}
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <h1 className="text-center mb-4">View Your Menu</h1>
+                    <Form>
+                        <Form.Select
+                            value={selectedMenu ? selectedMenu.pk : ''} // Setting value of the select input based on selectedMenu state
+                            onChange={handleMenuChange} // Calling handleMenuChange on select change
+                        >
+                            <option value="">Select a Menu</option>
+                            {menus.map((menu, index) => (
+                                <option key={index} value={menu.pk}>
+                                    {menu.pk}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Form>
+                </div>
             </div>
+
+            {/* Displaying selected menu details */}
+            <div className="row justify-content-center mt-4">
+                <div className="col-lg-8">
+                    {!menuItems ? null : (
+                        <ul className="list-group">
+                            {/* Rendering details of the selected menu */}
+                            {Object.keys(menuItems).map((key, index) => {
+                                if (key !== 'pk') { // Excluding 'pk' from rendering
+                                    return (
+                                        <li key={index} className="list-group-item">
+                                            {menuItems[key]}
+                                        </li>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </ul>
+                    )}
+                </div>
+            </div>
+
         </div>
     );
 }
