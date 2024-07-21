@@ -32,7 +32,7 @@ export default function Update() {
             .catch((error) => {
                 console.error('Error fetching data:', error); // Properly log the error
             });
-    }, []);
+    }, [textInput]);
 
     console.log(menus);
     console.log(selectedMenu);
