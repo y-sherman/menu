@@ -14,7 +14,7 @@ const MenuList = () => {
     };
 
     const handleDescriptionChange = (e) => {
-        const lines = e.target.value.split('\n').map(item => item.trim());  // Separate description based on new lines
+        const lines = e.target.value.split('\n'); // Split description based on new lines without trimming
         setMenuDescription(lines);
     };
 
@@ -27,8 +27,7 @@ const MenuList = () => {
             const newMenu = {
                 menuId: menuName,
                 userName: userName,
-                menuItems: menuDescription
-                  // Include user's name in the newMenu object
+                menuItems: menuDescription // Include user's name in the newMenu object
             };
             
             try {
@@ -64,13 +63,13 @@ const MenuList = () => {
 
             {error && <div className="alert alert-danger">{error}</div>}
             <Form.Group>
-                    <Form.Label>Your Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Your Name"
-                        value={userName}
-                        onChange={handleUserNameChange}
-                    />
+                <Form.Label>Your Name</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter Your Name"
+                    value={userName}
+                    onChange={handleUserNameChange}
+                />
             </Form.Group>
             <Form className="mt-4">
                 <Form.Group>
