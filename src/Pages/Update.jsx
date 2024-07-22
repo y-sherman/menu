@@ -55,11 +55,11 @@ export default function Update() {
     console.log("selectedmenu: ", selectedMenu);
     console.log("menukey : ", menuKey);
 
-    const toggleForm = (item) => {
+    const toggleForm = (item, key) => {
         setShowForm(true);
         console.log("item: ", item);
-        let index = (getKeyByValue(selectedMenu, item));
-        setItemToUpdate(index);
+        // let index = (getKeyByValue(selectedMenu, item));
+        setItemToUpdate(key);
         console.log("item to update: ", itemToUpdate);
     };
 
@@ -125,24 +125,25 @@ export default function Update() {
             </div>
 
             <div className="d-flex justify-content-center mt-3">
-                {!showForm && selectedMenu && Object.keys(selectedMenu).map((key) => {
-                    if (key !== 'pk') { // Exclude the 'pk' property
-                        console.log("key: ", selectedMenu[key]);
+                {!showForm && selectedMenu.menuItems && Object.keys(selectedMenu.menuItems).map((key) => {
+                     if (key !== 'pk') { // Exclude the 'pk' property
+                        // console.log("key: ", selectedMenu[key]);
+                        console.log(selectedMenu);
+                        console.log("key: " ,key);
 
                         return (
                             <Button
                                 className="btn btn-primary mx-2"
-
-                                onClick={() => toggleForm(selectedMenu[key])}
+                                onClick={() => toggleForm(selectedMenu.menuItems[key], key)}
                                 variant="info"
                                 key={key}
                             >
-                                {selectedMenu[key]}
+                                {selectedMenu.menuItems[key]}
                             </Button>
 
                         );
-                    }
-                    return null;
+                     }
+                     return null;
                 })}
             </div>
 
